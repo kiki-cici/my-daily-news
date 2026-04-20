@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的每日简报</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; }
+        .card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .date { color: #888; font-size: 0.9em; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;}
+        .content { line-height: 1.8; white-space: pre-wrap; color: #333; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #1a1a1a;">我的每日简报</h1>
+    <div id="news-container">正在努力加载中...</div>
+
+    <script>
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('news-container');
+                container.innerHTML = ''; 
+                data.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<div class="date">📅 ${item.date}</div><div class="content">${item.content}</div>`;
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                document.getElementById('news-container').innerHTML = '今天还没有数据哦，请稍后再来看看。';
+            });
+    </script>
+</body>
+</html>
